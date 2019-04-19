@@ -1,0 +1,24 @@
+# -*- coding: utf-8 -*-
+import scrapy
+from taobao.items import TaobaoItem
+
+class SijiantaoSpider(scrapy.Spider):
+    name = 'sijiantao'
+    allowed_domains = ['https://s.taobao.com/search?q=%E5%9B%9B%E4%BB%B6%E5%A5%97']
+    start_urls = ['http://https://s.taobao.com/search?q=%E5%9B%9B%E4%BB%B6%E5%A5%97/']
+
+    def parse(self, response):
+        prices = response.xpath(''//p[@class='productPrice']/em/text()).extract()
+        sale_volume = response.xpath(''//p[@class='productStatus']//em/text()).extract()
+        title = response.xpath('//p[@class='productTitle']/a/@title').extract()
+        comment = response.xpath('//p[@class='productStatus']/span[2]/a/text()).extract()
+        item = TaobaoItem()
+        item['price' ] = prices
+        item['sale_volue'] = sale_volume
+        item['comment'] = comment
+        item['title'] = title
+
+
+
+
+
